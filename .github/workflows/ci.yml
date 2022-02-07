@@ -30,6 +30,5 @@ jobs:
         uses: dima-engineer/pytest-reporter@v1.1.3
         with:
           cov-omit-list: test/*
-          cov-threshold-single: 50
           cov-threshold-total: 50
 
