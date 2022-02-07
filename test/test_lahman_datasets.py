@@ -8,6 +8,8 @@ def test_load_lahman_datasets():
     ld.load()
     df_names = ld.dataframe_names
 
+    assert len(df_names) > 0
+
     for df_name in df_names:
         df = ld[df_name]
         assert df is not None

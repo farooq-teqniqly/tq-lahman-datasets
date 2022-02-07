@@ -9,6 +9,7 @@ from zipfile import ZipFile
 import pandas as pd
 import requests
 from tqdm import tqdm
+from glob import glob
 
 
 class LahmanDatasets:
@@ -47,12 +48,14 @@ class LahmanDatasets:
         """
         self.__download(self.__target_filename)
         self.__extract_zip_files()
+        self.__create_datasets()
 
     def __download(self, target_filename: str) -> None:
         result = requests.get(self.__url, stream=True)
 
         with open(target_filename, "wb") as file:
             for chunk in tqdm(result.iter_content(chunk_size=1000000)):
+                tqdm.write(f"{self.__url} => Downloading chunk...")
                 file.write(chunk)
 
         self.__zip_file = ZipFile(target_filename, "r")
@@ -62,3 +65,15 @@ class LahmanDatasets:
             os.makedirs(self.__extract_folder)
 
         self.__zip_file.extractall(self.__extract_folder)
+
+    def __create_datasets(self):
+        csv_files = glob(os.path.join(
+            self.__extract_folder,
+            "baseballdatabank-master",
+            "core",
+            "*.csv"))
+
+        for file in csv_files:
+            df = pd.read_csv(file)
+            df_name = os.path.splitext(file)[0].split("\\")[-1]
+            self.__dataframes_lookup.append((df_name, df))
