@@ -1,15 +1,22 @@
+"""
+Lahman baseball datasets module.
+"""
 import os
+import tempfile
 from typing import Optional, Tuple, List
+from zipfile import ZipFile
 
 import pandas as pd
 import requests
-import tempfile
-from glob import glob
 from tqdm import tqdm
-from zipfile import ZipFile
 
 
 class LahmanDatasets:
+    """
+    This class downloads the Lahman CSV files containing baseball statistics
+    and loads them into Pandas datasets. About 43 MB of data will be downloaded.
+    """
+
     def __init__(self):
         self.__url = "https://github.com/chadwickbureau/baseballdatabank/archive/master.zip"
         self.__target_filename = os.path.join(tempfile.gettempdir(), "master.zip")
@@ -17,23 +24,29 @@ class LahmanDatasets:
         self.__zip_file: Optional[ZipFile] = None
         self.__dataframes_lookup: List[Tuple[str, pd.DataFrame]] = []
 
-    @property
-    def dataframe_names(self):
-        return [tup[0] for tup in self.__dataframes_lookup]
-
     def __getitem__(self, item):
         dfs = [tup[1] for tup in self.__dataframes_lookup if tup[0] == item]
 
         if len(dfs) == 1:
             return dfs[0]
 
+        return None
+
+    @property
+    def dataframe_names(self):
+        """
+        Returns the list of data frame names. Each data frame corresponds
+        to a CSV file in the Lahman database.
+        :return: The list of data frame names.
+        """
+        return [tup[0] for tup in self.__dataframes_lookup]
+
     def load(self) -> None:
+        """
+        Loads the Lahman baseball datasets.
+        """
         self.__download(self.__target_filename)
         self.__extract_zip_files()
-
-    @staticmethod
-    def __get_filename_without_extension(filename: str) -> str:
-        return os.path.splitext(filename)[0].split("\\")[-1]
 
     def __download(self, target_filename: str) -> None:
         result = requests.get(self.__url, stream=True)
@@ -49,13 +62,3 @@ class LahmanDatasets:
             os.makedirs(self.__extract_folder)
 
         self.__zip_file.extractall(self.__extract_folder)
-
-    def __get_dataframe_descriptors(self) -> List[Tuple[str, str]]:
-        return [(LahmanDatasets.__get_filename_without_extension(filename), filename) for filename in
-                glob(os.path.join(self.__extract_folder, "baseballdatabank-master", "core", "*.csv"),
-                     recursive=False)]
-
-    def __load_dataframes(self) -> None:
-        for df_name, filename in self.__get_dataframe_descriptors():
-            df = pd.read_csv(filename)
-            self.__dataframes_lookup.append((df_name, df))
