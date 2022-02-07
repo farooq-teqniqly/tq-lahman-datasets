@@ -19,8 +19,17 @@ jobs:
         run: |
           pylint $(git ls-files '*.py')
 
-  test:
+  tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: cclauss/GitHub-Action-for-pytest@0.5.0
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.9.9'
+      - id: run-tests
+        uses: dima-engineer/pytest-reporter@v1.0.1
+        with:
+          cov-omit-list: tests/*
+          cov-threshold-single: 50
+          cov-threshold-total: 50
 
