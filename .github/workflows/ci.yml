@@ -1,20 +1,26 @@
 name: Pylint
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python 3.9
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.9
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pylint
-    - name: Analyze code with pylint
-      run: |
-        pylint $(git ls-files '*.py')
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pylint
+      - name: Analyze code with pylint
+        run: |
+          pylint $(git ls-files '*.py')
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cclauss/GitHub-Action-for-pytest@0.5.0
+
