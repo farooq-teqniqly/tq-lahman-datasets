@@ -5,11 +5,12 @@ import os
 import tempfile
 from typing import Optional, Tuple, List
 from zipfile import ZipFile
+from glob import glob
 
 import pandas as pd
+# pylint: disable=import-error
 import requests
 from tqdm import tqdm
-from glob import glob
 
 
 class LahmanDatasets:
@@ -58,6 +59,7 @@ class LahmanDatasets:
                 tqdm.write(f"{self.__url} => Downloading chunk...")
                 file.write(chunk)
 
+        # pylint: disable=consider-using-with
         self.__zip_file = ZipFile(target_filename, "r")
 
     def __extract_zip_files(self):
@@ -74,6 +76,6 @@ class LahmanDatasets:
             "*.csv"))
 
         for file in csv_files:
-            df = pd.read_csv(file)
+            data_frame = pd.read_csv(file)
             df_name = os.path.splitext(file)[0].split("\\")[-1]
-            self.__dataframes_lookup.append((df_name, df))
+            self.__dataframes_lookup.append((df_name, data_frame))
