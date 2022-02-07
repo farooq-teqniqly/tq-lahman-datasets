@@ -8,7 +8,6 @@ from zipfile import ZipFile
 from glob import glob
 
 import pandas as pd
-# pylint: disable=import-error
 import requests
 from tqdm import tqdm
 
