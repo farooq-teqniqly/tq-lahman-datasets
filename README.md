@@ -1,5 +1,7 @@
 # Lahman Baseball Datasets
 
+![CI](https://github.com/farooq-teqniqly/tq-lahman-datasets/actions/workflows/ci.yml/badge.svg)
+
 This package consists of the [Lahman Baseball Database](http://www.seanlahman.com/baseball-archive/) with the intent 
 of consuming it from Python code via the [Pandas](https://pandas.pydata.org/docs/) library.
 The package was inspired from the book [Analyzing Baseball Data with R](https://www.routledge.com/Analyzing-Baseball-Data-with-R-Second-Edition/Marchi-Albert-Marchi-Albert-Baumer/p/book/9780815353515). Obviously R is not
