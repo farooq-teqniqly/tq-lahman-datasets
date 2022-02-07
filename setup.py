@@ -1,12 +1,17 @@
-import teqniqly
+"""
+Setup module.
+"""
 from setuptools import setup, find_packages
-
-install_requires = ["pandas", "requests", "tqdm"]
+import teqniqly
 
 
 def long_description():
-    with open("README.md", encoding="utf-8") as f:
-        return f.read()
+    """
+    Returns the text of the readme.
+    :return: The text of the readme.
+    """
+    with open("README.md", encoding="utf-8") as file:
+        return file.read()
 
 
 PROJECT_URL = "https://github.com/farooq-teqniqly/tq-lahman-datasets"
@@ -23,7 +28,7 @@ setup(
     license=teqniqly.__license__,
     packages=find_packages(include=["teqniqly", "teqniqly.*"]),
     python_requires=">=3.9",
-    install_requires=install_requires,
+    install_requires=["pandas", "requests", "tqdm"],
     classifiers=[
         "Development Status :: 4 - Alpha",
         "Programming Language :: Python",
@@ -33,5 +38,4 @@ setup(
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Database",
     ],
-    project_urls={"GitHub": PROJECT_URL},
-)
+    project_urls={"GitHub": PROJECT_URL})
