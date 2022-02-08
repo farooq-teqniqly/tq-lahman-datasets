@@ -34,6 +34,7 @@ jobs:
           cov-threshold-total: 90
   build_wheels:
     name: Build wheel
+    if: startsWith(github.ref, 'refs/tags/')
     needs: tests
     runs-on: ubuntu-latest
     steps:
