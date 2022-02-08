@@ -30,7 +30,7 @@ setup(
     python_requires=">=3.9",
     install_requires=["pandas", "requests", "tqdm"],
     classifiers=[
-        "Development Status :: 4 - Alpha",
+        "Development Status :: 5 - Production/Stable",
         "Programming Language :: Python",
         "Programming Language :: Python :: 3 :: Only",
         "Intended Audience :: Developers",
