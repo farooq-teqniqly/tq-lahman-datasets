@@ -2,6 +2,6 @@
 This package contains the Lahman baseball database.
 """
 
-__version__ = "1.0.0.b1"
+__version__ = "1.0.0.0"
 __author__ = "Teqniqly"
 __license__ = "MIT"
