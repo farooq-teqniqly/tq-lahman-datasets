@@ -37,7 +37,7 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     env:
-      TWINE_USERNAME: ${{ secrets.PYPI_TOKEN }}
+      TWINE_USERNAME: ${{ secrets.PYPI_USER }}
       TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
     steps:
       - uses: actions/checkout@v2
