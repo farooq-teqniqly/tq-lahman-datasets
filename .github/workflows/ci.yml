@@ -39,10 +39,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Upload to PyPI
-        uses: FeatureLabs/gh-action-pypi-upload@v1
-        if: startsWith(github.ref, 'refs/tags')
-        env:
-          PYPI_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          PYPI_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-          TEST_PYPI_USERNAME: ${{ secrets.TEST_PYPI_USERNAME }}
-          TEST_PYPI_PASSWORD: ${{ secrets.TEST_PYPI_PASSWORD }}
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: ortega2247/pypi-upload-action@master
+        with:
+          user: ${{ secrets.pypi_token }}
+          password: ${{ secrets.pypi_password }}
